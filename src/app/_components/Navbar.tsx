@@ -74,7 +74,7 @@ const Navbar = () => {
 										</div>
 									)}
 
-									<div className="flow-root px-2">
+									<div className="flow-root ">
 										<Cart />
 									</div>
 								</div>
