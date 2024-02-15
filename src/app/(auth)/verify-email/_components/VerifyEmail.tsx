@@ -39,10 +39,7 @@ export const VerifyEmail = ({ token }: VerifyEmailProps) => {
 					Thank you for verifying your email.
 				</p>
 
-				<Link
-					href="/sign-in"
-					className={buttonVariants({ className: "mt-4", variant: "link" })}
-				>
+				<Link href="/sign-in" className={buttonVariants({ className: "mt-4" })}>
 					Sign in <ArrowRight className="ml-1 w-4 h-4" />
 				</Link>
 			</div>
