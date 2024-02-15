@@ -24,8 +24,11 @@ const SignUpPage = () => {
 		resolver: zodResolver(AuthCredentialsValidator),
 	});
 
+	// const { } = trpc
+
 	const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-		
+		// Send data to server
+
 	};
 
 	return (
