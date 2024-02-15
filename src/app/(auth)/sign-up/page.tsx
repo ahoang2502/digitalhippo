@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
@@ -14,6 +14,7 @@ import {
 	AuthCredentialsValidator,
 	TAuthCredentialsValidator,
 } from "@/lib/validators/account-credentials-validator";
+import { trpc } from "@/trpc/client";
 
 const SignUpPage = () => {
 	const {
@@ -24,11 +25,11 @@ const SignUpPage = () => {
 		resolver: zodResolver(AuthCredentialsValidator),
 	});
 
-	// const { } = trpc
+	const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({});
 
 	const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
 		// Send data to server
-
+		mutate({ email, password });
 	};
 
 	return (
@@ -68,14 +69,18 @@ const SignUpPage = () => {
 								<Label htmlFor="password">Password</Label>
 								<Input
 									{...register("password")}
+									placeholder="Password"
+									type="password"
 									className={cn({
 										"focus-visible:ring-red-500": errors.password,
 									})}
-									placeholder="Password"
-								/>
+									/>
 							</div>
 
-							<Button>Sign up</Button>
+							<Button disabled={isLoading}>
+								Sign up
+								{isLoading && <Loader2 className="h-4 w-4 ml-1 animate-spin" />}
+							</Button>
 						</div>
 					</form>
 				</div>
