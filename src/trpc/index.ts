@@ -7,6 +7,7 @@ import { getPayloadClient } from "../get-payload";
 
 export const appRouter = router({
 	auth: authRouter,
+
 	getInfiniteProducts: publicProcedure
 		.input(
 			z.object({

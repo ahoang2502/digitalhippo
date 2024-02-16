@@ -7,6 +7,7 @@ import { Product } from "@/payload-types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn, formatPrice } from "@/lib/utils";
 import { PRODUCT_CATEGORIES } from "@/config";
+import { ImageSlider } from "./ImageSlider";
 
 interface ProductListingProps {
 	product: Product | null;
@@ -28,6 +29,10 @@ export const ProductListing = ({ product, index }: ProductListingProps) => {
 		({ value }) => value === product?.category
 	)?.label;
 
+	const validUrls = product?.images
+		.map(({ image }) => (typeof image === "string" ? image : image.url))
+		.filter(Boolean) as string[];
+
 	if (!product || !isVisible) return <ProductPlaceholder />;
 
 	if (isVisible && product)
@@ -39,6 +44,8 @@ export const ProductListing = ({ product, index }: ProductListingProps) => {
 				})}
 			>
 				<div className="flex flex-col w-full">
+					<ImageSlider urls={validUrls} />
+
 					<h3 className="mt-4 font-medium text-sm text-gray-700">
 						{product.name}
 					</h3>
