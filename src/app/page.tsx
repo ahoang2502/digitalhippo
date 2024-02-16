@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { ProductReel } from "@/components/ProductReel";
+import { ProductReel } from "@/app/_components/products/ProductReel";
 
 const perks = [
 	{
@@ -51,7 +51,11 @@ export default function Home() {
 				</div>
 
 				{/* List products */}
-				<ProductReel title="Brand new" href='/products' />
+				<ProductReel
+					title="Brand new"
+					href="/products"
+					query={{ sort: "desc", limit: 4 }}
+				/>
 			</MaxWidthWrapper>
 
 			{/* Perks */}
