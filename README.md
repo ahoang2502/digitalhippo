@@ -1,1 +1,1 @@
-![Uploading Screenshot 2024-02-16 at 1.54.12 pm.png…]()
+[![application-architecture.png](https://i.postimg.cc/15xMSW3x/application-architecture.png)](https://postimg.cc/Th9nqJbQ)
