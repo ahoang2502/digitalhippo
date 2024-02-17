@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 
@@ -12,13 +13,28 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { formatPrice } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { useCart } from "@/hooks/use-cart";
+import { CartItem } from "./CartItem";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const Cart = () => {
-	const itemCount = 1;
-	const fee = 9;
+	const { items } = useCart();
+
+	const itemCount = items.length;
+	const cartTotal = items.reduce(
+		(total, { product }) => total + product.price,
+		0
+	);
+	const fee = 1;
+
+	const [isMounted, setIsMounted] = useState(false);
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
 
 	return (
 		<Sheet>
@@ -28,24 +44,30 @@ export const Cart = () => {
 					className="h-6 w-6 flex-shrink-0 text-gray-600 group-hover:text-gray-900"
 				/>
 
-				{/* <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-					0
-				</span> */}
-				<span className="bg-rose-500 rounded-full px-1 py-[0.5px] text-xs text-white font-medium absolute top-0 -right-1.5">
-					{itemCount}
+				<span
+					className={cn(
+						"bg-rose-500 rounded-full px-1 py-[0.5px] text-xs text-white font-medium absolute top-0 -right-1.5",
+						{ "bg-gray-200 text-gray-800": itemCount === 0 }
+					)}
+				>
+					{isMounted ? itemCount : null}
 				</span>
 			</SheetTrigger>
 
 			<SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
 				<SheetHeader className="space-y-2.5 pr-6">
-					<SheetTitle>Cart ({itemCount})</SheetTitle>
+					<SheetTitle>Cart ({isMounted ? itemCount : null})</SheetTitle>
 				</SheetHeader>
 
 				{itemCount > 0 ? (
 					<>
 						<div className="flex w-full flex-col pr-6">
-							{/* TODO: Cart Logic */}
-							Cart Items
+							{/*  Cart Logic */}
+							<ScrollArea>
+								{items.map(({ product }) => (
+									<CartItem key={product.id} product={product} />
+								))}
+							</ScrollArea>
 						</div>
 
 						<div className="space-y-4 pr-6">
@@ -64,7 +86,7 @@ export const Cart = () => {
 
 								<div className="flex">
 									<span className="flex-1">Total</span>
-									<span>{formatPrice(fee)}</span>
+									<span>{formatPrice(cartTotal + fee)}</span>
 								</div>
 							</div>
 

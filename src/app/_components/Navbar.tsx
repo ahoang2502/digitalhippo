@@ -32,7 +32,7 @@ const Navbar = async () => {
 							</div>
 
 							<div className="ml-auto flex items-center">
-								<div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-2">
+								<div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-end sm:space-x-2">
 									{user ? null : (
 										<Link
 											href="/sign-in"

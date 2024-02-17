@@ -3,9 +3,13 @@
 import React, { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/hooks/use-cart";
+import { Product } from "@/payload-types";
 
-export const AddToCartButton = () => {
+export const AddToCartButton = ({ product }: { product: Product }) => {
 	const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
+	const { addItem } = useCart();
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
@@ -16,7 +20,14 @@ export const AddToCartButton = () => {
 	}, [isSuccess]);
 
 	return (
-		<Button onClick={() => setIsSuccess(true)} size="lg" className="w-full">
+		<Button
+			onClick={() => {
+				addItem(product);
+				setIsSuccess(true);
+			}}
+			size="lg"
+			className="w-full"
+		>
 			{isSuccess ? "Added!" : "Add to cart"}
 		</Button>
 	);

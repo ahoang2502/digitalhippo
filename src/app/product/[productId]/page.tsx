@@ -50,7 +50,7 @@ const ProductIdPage = async ({ params }: ProductIdPageProps) => {
 		({ value }) => value === product.category
 	)?.label;
 
-	const validUrls = product?.images
+	const validUrls = product.images
 		.map(({ image }) => (typeof image === "string" ? image : image.url))
 		.filter(Boolean) as string[];
 
@@ -123,7 +123,7 @@ const ProductIdPage = async ({ params }: ProductIdPageProps) => {
 					</div>
 
 					{/* Product Images */}
-					<div className="mt-10 lg:col-start-2 lg:row-start-2 lg:mt-0 lg:self-center">
+					<div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
 						<div className="aspect-square rounded-lg">
 							<ImageSlider urls={validUrls} />
 						</div>
@@ -133,7 +133,7 @@ const ProductIdPage = async ({ params }: ProductIdPageProps) => {
 					<div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
 						<div className="">
 							<div className="mt-10">
-								<AddToCartButton />
+								<AddToCartButton product={product} />
 							</div>
 
 							<div className="mt-6 text-center">
