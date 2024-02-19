@@ -4,14 +4,27 @@ import { Check, Loader2, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { cn, formatPrice } from "@/lib/utils";
 import { useCart } from "@/hooks/use-cart";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { Button } from "@/components/ui/button";
+import { trpc } from "@/trpc/client";
 
 const CartPage = () => {
+	const router = useRouter();
+
 	const { items, removeItem } = useCart();
+
+	const { mutate: createCheckoutSession, isLoading } =
+		trpc.payment.createSession.useMutation({
+			onSuccess: ({ url }) => {
+				if (url) router.push(url);
+			},
+		});
+
+	const productIds = items.map(({ product }) => product.id);
 
 	// Fix hydration error
 	const [isMounted, setIsMounted] = useState(false);
@@ -190,7 +203,15 @@ const CartPage = () => {
 						</div>
 
 						<div className="mt-6">
-							<Button className="w-full " size="lg" onClick={() => {}}>
+							<Button
+								className="w-full "
+								size="lg"
+								onClick={() => createCheckoutSession({ productIds })}
+								disabled={items.length === 0 || isLoading}
+							>
+								{isLoading ? (
+									<Loader2 className="w-4 h-4 animate-spin mr-1.5" />
+								) : null}
 								Checkout
 							</Button>
 						</div>
