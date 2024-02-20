@@ -7,6 +7,7 @@ import { IncomingMessage } from "http";
 import { getPayloadClient } from "./get-payload";
 import { nextApp, nextHandler } from "./next-utils";
 import { appRouter } from "./trpc";
+import { stripeWebhookHandler } from "./webhooks";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;

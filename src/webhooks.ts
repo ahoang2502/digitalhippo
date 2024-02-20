@@ -6,6 +6,7 @@ import { WebhookRequest } from "./server";
 import { stripe } from "./lib/stripe";
 import { getPayloadClient } from "./get-payload";
 import { Product } from "./payload-types";
+import { ReceiptEmailHtml } from "./components/emails/ReceiptEmail";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
