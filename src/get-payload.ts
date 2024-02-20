@@ -55,7 +55,7 @@ export const getPayloadClient = async ({
 		cached.client = await cached.promise;
 	} catch (error: unknown) {
 		cached.promise = null;
-		throw new Error('Internal Server Error 500');
+		throw error
 	}
 
 	return cached.client;

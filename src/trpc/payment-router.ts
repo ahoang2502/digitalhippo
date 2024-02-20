@@ -70,6 +70,8 @@ export const paymentRouter = router({
 
 				return { url: stripeSession.url };
 			} catch (error) {
+				throw new TRPCError({ code: "NOT_FOUND" });
+				
 				return { url: null };
 			}
 		}),
