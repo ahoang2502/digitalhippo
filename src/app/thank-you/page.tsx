@@ -15,7 +15,7 @@ interface ThankYouPageProps {
 	searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export const ThankYouPage = async ({ searchParams }: ThankYouPageProps) => {
+const ThankYouPage = async ({ searchParams }: ThankYouPageProps) => {
 	const orderId = searchParams.orderId;
 	const nextCookies = cookies();
 
@@ -187,3 +187,5 @@ export const ThankYouPage = async ({ searchParams }: ThankYouPageProps) => {
 		</main>
 	);
 };
+
+export default ThankYouPage
