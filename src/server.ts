@@ -4,6 +4,7 @@ import { inferAsyncReturnType } from "@trpc/server";
 import bodyParser from "body-parser";
 import { IncomingMessage } from "http";
 import nextBuild from "next/dist/build";
+import { parse } from "url";
 
 import { getPayloadClient } from "./get-payload";
 import { nextApp, nextHandler } from "./next-utils";
@@ -63,6 +64,11 @@ const start = async () => {
 		const request = req as PayloadRequest;
 
 		if (!request.user) return res.redirect("/sign-in?origin=cart");
+
+		const parsedUrl = parse(req.url, true);
+		const { query } = parsedUrl;
+
+		return nextApp.render(req, res, "/cart", query);
 	});
 
 	app.use('/cart', cartRouter)
