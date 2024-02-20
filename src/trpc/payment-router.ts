@@ -70,8 +70,6 @@ export const paymentRouter = router({
 
 				return { url: stripeSession.url };
 			} catch (error) {
-				console.log("[STRIPE]", error);
-
 				return { url: null };
 			}
 		}),
