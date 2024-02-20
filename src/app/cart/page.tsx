@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 import { cn, formatPrice } from "@/lib/utils";
 import { useCart } from "@/hooks/use-cart";
-import { PRODUCT_CATEGORIES } from "@/config";
+import { PRODUCT_CATEGORIES, TRANSACTION_FEE } from "@/config";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 
@@ -36,7 +36,6 @@ const CartPage = () => {
 		(total, { product }) => total + product.price,
 		0
 	);
-	const fee = 1;
 
 	return (
 		<div className="bg-white ">
@@ -180,7 +179,7 @@ const CartPage = () => {
 
 								<div className="text-sm font-medium text-gray-900">
 									{isMounted ? (
-										formatPrice(fee)
+										formatPrice(TRANSACTION_FEE)
 									) : (
 										<Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
 									)}
@@ -194,7 +193,7 @@ const CartPage = () => {
 
 								<div className="text-base font-medium text-gray-900">
 									{isMounted ? (
-										formatPrice(cartTotal + fee)
+										formatPrice(cartTotal + TRANSACTION_FEE)
 									) : (
 										<Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
 									)}

@@ -19,6 +19,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { useCart } from "@/hooks/use-cart";
 import { CartItem } from "./CartItem";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { TRANSACTION_FEE } from "@/config";
 
 export const Cart = () => {
 	const { items } = useCart();
@@ -28,7 +29,6 @@ export const Cart = () => {
 		(total, { product }) => total + product.price,
 		0
 	);
-	const fee = 1;
 
 	const [isMounted, setIsMounted] = useState(false);
 
@@ -81,12 +81,12 @@ export const Cart = () => {
 
 								<div className="flex">
 									<span className="flex-1">Transaction Fee</span>
-									<span>{formatPrice(fee)}</span>
+									<span>{formatPrice(TRANSACTION_FEE)}</span>
 								</div>
 
 								<div className="flex">
 									<span className="flex-1">Total</span>
-									<span>{formatPrice(cartTotal + fee)}</span>
+									<span>{formatPrice(cartTotal + TRANSACTION_FEE)}</span>
 								</div>
 							</div>
 
