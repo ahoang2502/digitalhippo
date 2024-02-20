@@ -10,6 +10,7 @@ import { nextApp, nextHandler } from "./next-utils";
 import { appRouter } from "./trpc";
 import { stripeWebhookHandler } from "./webhooks";
 import path from "path";
+import { PayloadRequest } from "payload/types";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -42,6 +43,14 @@ const start = async () => {
 				cms.logger.info(`Admin URL ${cms.getAdminURL()}`);
 			},
 		},
+	});
+
+	const cartRouter = express.Router();
+	cartRouter.use(payload.authenticate);
+	cartRouter.get("/", (req, res) => {
+		const request = req as PayloadRequest;
+
+		if (!request.user) return res.redirect("/sign-in?origin=cart");
 	});
 
 	if (process.env.NEXT_BUILD) {

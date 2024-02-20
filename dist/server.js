@@ -81,7 +81,7 @@ var createContext = function (_a) {
     });
 };
 var start = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var webhookMiddleware, payload;
+    var webhookMiddleware, payload, cartRouter;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -104,6 +104,13 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
                     })];
             case 1:
                 payload = _a.sent();
+                cartRouter = express_1.default.Router();
+                cartRouter.use(payload.authenticate);
+                cartRouter.get("/", function (req, res) {
+                    var request = req;
+                    if (!request.user)
+                        return res.redirect("/sign-in?origin=cart");
+                });
                 if (process.env.NEXT_BUILD) {
                     app.listen(PORT, function () { return __awaiter(void 0, void 0, void 0, function () {
                         return __generator(this, function (_a) {
